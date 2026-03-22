@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>INCIQ · Skincare Ingredient Safety Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <div id="appRoot"></div>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="camera-modal">
+        <div class="camera-container">
+            <video id="ocrVideo" autoplay playsinline muted></video>
+            <div class="camera-overlay">
+                <div class="camera-guide">
+                    <div class="guide-frame"></div>
+                    <p class="guide-text">Position ingredient list within the frame</p>
+                </div>
+                <div class="camera-actions">
+                    <button id="closeCameraBtn" class="camera-close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <button id="captureOcrBtn" class="camera-capture-btn">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="ocrLoading" class="ocr-loading">
+                <div class="loading-spinner"></div>
+                <p>Processing image...</p>
+                <p class="loading-sub">Extracting ingredients from text</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Ingredients Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Review Extracted Ingredients</h3>
+                <button class="modal-close" id="closeEditModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="extractedIngredients" rows="8" placeholder="Extracted ingredients will appear here. Edit as needed."></textarea>
+                <p class="modal-hint">
+                    <i class="fas fa-info-circle"></i> 
+                    Separate ingredients with commas. Review and correct any OCR errors.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelEditBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmIngredientsBtn" class="btn-primary">Analyze Ingredients</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="modal-close" id="closeProfileModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="editGender" onchange="updateEditLactatingVisibility()">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Skin Type</label>
+                    <select id="editSkinType">
+                        <option value="dry">Dry</option>
+                        <option value="oily">Oily</option>
+                        <option value="combination">Combination</option>
+                        <option value="sensitive">Sensitive</option>
+                        <option value="normal">Normal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Allergies (comma separated)</label>
+                    <input type="text" id="editAllergies" placeholder="e.g., Fragrance, Alcohol">
+                </div>
+                <div class="form-group">
+                    <label>Skin Conditions (comma separated)</label>
+                    <input type="text" id="editConditions" placeholder="e.g., Acne-prone, Eczema">
+                </div>
+                <div class="form-group" id="editLactatingGroup" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="editLactating"> 
+                        I am lactating / breastfeeding
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelProfileBtn" class="btn-secondary">Cancel</button>
+                <button id="saveProfileBtn" class="btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
