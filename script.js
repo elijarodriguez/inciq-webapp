@@ -997,7 +997,7 @@ function renderAuth() {
             <div class="auth-card">
                 <div class="auth-logo">
                     <div class="logo">INCIQ<span class="logo-accent">.</span></div>
-                    <p>Know before you glow.r</p>
+                    <p>Know before you glow.</p>
                 </div>
                 <div id="authForms">
                     <div id="loginForm">
