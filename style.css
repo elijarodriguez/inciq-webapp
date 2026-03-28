@@ -22,6 +22,25 @@
     --radius-lg: 28px;
 }
 
+/* Dark Theme Variables */
+body.dark-theme {
+    --color-primary: #3AF4F9;
+    --color-primary-dark: #1ed0d6;
+    --color-primary-light: #9cfaff;
+    --color-bg-light: #0F1A1E;
+    --color-bg-card: #1A2A2F;
+    --color-border: #2A3A3F;
+    --color-text-primary: #E8F0ED;
+    --color-text-secondary: #B0C4CE;
+    --color-text-tertiary: #6B8A94;
+    --color-success-bg: #1A3A2A;
+    --color-warning-bg: #3A2A1A;
+    --color-danger-bg: #3A1F1A;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -33,6 +52,37 @@ body {
     background: linear-gradient(135deg, #E8F7F2 0%, #DCEFF0 100%);
     color: var(--color-text-primary);
     min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme {
+    background: linear-gradient(135deg, #0F1A1E 0%, #1A2A2F 100%);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    color: var(--color-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+    border-color: var(--color-primary);
 }
 
 /* App Container */
@@ -43,6 +93,7 @@ body {
     min-height: 100vh;
     box-shadow: var(--shadow-lg);
     position: relative;
+    transition: background 0.3s ease;
 }
 
 /* Header */
@@ -138,7 +189,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--color-text-primary);
     background: linear-gradient(135deg, rgba(58, 244, 249, 0.15) 0%, rgba(58, 244, 249, 0.05) 100%);
     padding: 0.4rem 0.9rem;
@@ -356,11 +407,16 @@ body {
 
 .results-header {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 1.25rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--color-border);
+}
+
+.results-header i {
+    color: var(--color-primary);
+    font-size: 1.1rem;
 }
 
 .results-header h3 {
@@ -398,6 +454,15 @@ body {
 .ingredient-row {
     padding: 0.9rem 0;
     border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.ingredient-row:hover {
+    background: rgba(58, 244, 249, 0.05);
+    margin: 0 -0.5rem;
+    padding: 0.9rem 0.5rem;
+    border-radius: var(--radius-sm);
 }
 
 .ingredient-row:last-child {
@@ -405,12 +470,14 @@ body {
 }
 
 .ingredient-name {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 0.3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .ingredient-status {
@@ -430,6 +497,25 @@ body {
     color: var(--color-warning);
 }
 
+.status-risk {
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+.status-info {
+    background: var(--color-border);
+    color: var(--color-text-tertiary);
+}
+
+.comedogenic-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    background: rgba(201, 110, 74, 0.15);
+    color: var(--color-warning);
+    font-weight: 500;
+}
+
 .ingredient-reason {
     font-size: 0.7rem;
     color: var(--color-text-tertiary);
@@ -441,6 +527,83 @@ body {
     padding: 2rem 1rem;
     color: var(--color-text-tertiary);
     font-size: 0.85rem;
+}
+
+/* Glossary Button */
+.glossary-button {
+    width: 100%;
+    background: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    padding: 1rem 1.2rem;
+    border-radius: 3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.glossary-button:hover {
+    background: linear-gradient(135deg, rgba(58, 244, 249, 0.1) 0%, rgba(58, 244, 249, 0.05) 100%);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Glossary Modal */
+.glossary-modal-container {
+    max-width: 500px !important;
+}
+
+.glossary-modal-body {
+    padding: 0 !important;
+    max-height: 70vh;
+    overflow: hidden;
+}
+
+.glossary-list {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.glossary-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--color-bg-light);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.glossary-item:hover {
+    transform: translateX(4px);
+    background: rgba(58, 244, 249, 0.1);
+}
+
+.glossary-term {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-primary);
+}
+
+.glossary-category {
+    font-size: 0.7rem;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.glossary-definition {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
 }
 
 /* History Section */
@@ -491,7 +654,7 @@ body {
 
 .history-item:hover {
     transform: translateX(2px);
-    background: #F5FCF9;
+    background: rgba(58, 244, 249, 0.05);
 }
 
 .history-date {
@@ -562,8 +725,8 @@ body {
 }
 
 .guide-frame {
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     border: 2px solid rgba(58, 244, 249, 0.8);
     border-radius: var(--radius-lg);
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
@@ -571,7 +734,7 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { border-color: rgba(58, 244, 249, 0.8); }
+    0%, 100% { border-color: rgba(58, 244, 249, 0.8); transform: scale(1); }
     50% { border-color: rgba(58, 244, 249, 1); transform: scale(1.02); }
 }
 
@@ -581,6 +744,12 @@ body {
     margin-top: 1rem;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     font-weight: 500;
+}
+
+.guide-sub {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
 }
 
 .camera-actions {
@@ -668,7 +837,7 @@ body {
 
 .loading-sub {
     font-size: 0.7rem !important;
-    color: var(--color-text-tertiary) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Modal */
@@ -846,6 +1015,12 @@ body {
     box-shadow: 0 0 0 3px rgba(58, 244, 249, 0.1);
 }
 
+.field-hint {
+    font-size: 0.7rem;
+    color: var(--color-text-tertiary);
+    margin-top: 0.25rem;
+}
+
 /* Auth Container */
 .auth-container {
     max-width: 480px;
@@ -879,10 +1054,6 @@ body {
     font-size: 0.8rem;
     color: var(--color-text-tertiary);
     margin-top: 0.5rem;
-}
-
-.auth-form {
-    margin-top: 1.5rem;
 }
 
 .auth-button {
@@ -924,13 +1095,47 @@ body {
     font-size: 0.75rem;
     margin-top: 0.5rem;
     text-align: center;
+    background: var(--color-danger-bg);
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
+
+/* Password Wrapper for toggle visibility */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 2.5rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    font-size: 1rem;
+    padding: 0.25rem;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover {
+    color: var(--color-primary);
 }
 
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 0.75rem;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 .checkbox-group label {
@@ -942,104 +1147,31 @@ body {
     color: var(--color-text-primary);
     cursor: pointer;
     transition: all 0.2s ease;
-    padding: 0.35rem 0.5rem;
+    padding: 0.35rem 0.75rem;
     border-radius: var(--radius-sm);
+    background: var(--color-bg-light);
 }
 
 .checkbox-group label:hover {
-    background: rgba(58, 244, 249, 0.08);
+    background: rgba(58, 244, 249, 0.1);
 }
 
 .checkbox-group input[type="checkbox"] {
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
     width: 16px;
     height: 16px;
-    border: 1.5px solid var(--color-border);
-    border-radius: 3px;
-    background: var(--color-bg-card);
-    transition: all 0.2s ease;
-    position: relative;
-    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--color-primary);
 }
 
-.checkbox-group input[type="checkbox"]:hover {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(58, 244, 249, 0.1);
-}
-
-.checkbox-group input[type="checkbox"]:checked {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    border-color: var(--color-primary-dark);
-    box-shadow: 0 2px 8px rgba(58, 244, 249, 0.3);
-}
-
-.checkbox-group input[type="checkbox"]:checked::after {
-    content: "✓";
-    position: absolute;
-    top: -2px;
-    left: 1px;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.checkbox-group input[type="checkbox"]:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(58, 244, 249, 0.15);
-}
-
-/* Special styling for lactating/special health checkboxes */
+/* Lactating checkbox special styling */
 #editLactating,
 #regLactating {
     cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
     width: 17px;
     height: 17px;
-    border: 1.5px solid var(--color-warning);
-    border-radius: 6px;
-    background: linear-gradient(135deg, rgba(201, 110, 74, 0.05) 0%, rgba(201, 110, 74, 0.02) 100%);
-    transition: all 0.3s ease;
-    position: relative;
-    flex-shrink: 0;
+    accent-color: var(--color-warning);
 }
 
-#editLactating:hover,
-#regLactating:hover {
-    border-color: var(--color-warning);
-    background: linear-gradient(135deg, rgba(201, 110, 74, 0.15) 0%, rgba(201, 110, 74, 0.08) 100%);
-    box-shadow: 0 0 0 4px rgba(201, 110, 74, 0.15);
-}
-
-#editLactating:checked,
-#regLactating:checked {
-    background: linear-gradient(135deg, var(--color-warning) 0%, #b85a35 100%);
-    border-color: #8b4423;
-    box-shadow: 0 3px 12px rgba(201, 110, 74, 0.35);
-}
-
-#editLactating:checked::after,
-#regLactating:checked::after {
-    content: "✓";
-    position: absolute;
-    top: -2px;
-    left: 2px;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-#editLactating:focus,
-#regLactating:focus {
-    outline: none;
-    border-color: var(--color-warning);
-    box-shadow: 0 0 0 4px rgba(201, 110, 74, 0.2);
-}
-
-/* Label styling for lactating checkbox */
 label:has(#editLactating),
 label:has(#regLactating) {
     padding: 0.5rem 0.75rem;
@@ -1054,4 +1186,157 @@ label:has(#editLactating):hover,
 label:has(#regLactating):hover {
     background: linear-gradient(135deg, rgba(254, 240, 235, 0.9) 0%, rgba(254, 240, 235, 0.6) 100%);
     border-color: rgba(201, 110, 74, 0.4);
+}
+
+/* Ingredient Detail Card */
+.ingredient-detail-card {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.ingredient-detail-card p {
+    margin-bottom: 0.75rem;
+}
+
+.ingredient-detail-card hr {
+    margin: 1rem 0;
+    border-color: var(--color-border);
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    .app-container {
+        max-width: 100%;
+    }
+    
+    .profile-info {
+        gap: 0.4rem;
+    }
+    
+    .profile-tag {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.7rem;
+    }
+    
+    .guide-frame {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .camera-capture-btn,
+    .camera-close-btn {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+    
+    .modal-container {
+        width: 95%;
+        margin: 1rem;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-dark);
+}
+
+/* Glossary Button */
+.glossary-button {
+    width: 100%;
+    background: var(--color-bg-card);
+    border: 2px solid var(--color-border);
+    padding: 1rem 1.2rem;
+    border-radius: 3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.glossary-button:hover {
+    background: linear-gradient(135deg, rgba(58, 244, 249, 0.1) 0%, rgba(58, 244, 249, 0.05) 100%);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Glossary Modal */
+.glossary-modal-container {
+    max-width: 500px !important;
+    width: 90%;
+}
+
+.glossary-modal-body {
+    padding: 0 !important;
+    max-height: 70vh;
+    overflow: hidden;
+}
+
+.glossary-list {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.glossary-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--color-bg-light);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.glossary-item:hover {
+    transform: translateX(4px);
+    background: rgba(58, 244, 249, 0.1);
+}
+
+.glossary-term {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-primary);
+}
+
+.glossary-category {
+    font-size: 0.7rem;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.glossary-definition {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.scrollable {
+    overflow-y: auto;
 }
