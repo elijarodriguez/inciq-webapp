@@ -997,7 +997,7 @@ function renderAuth() {
             <div class="auth-card">
                 <div class="auth-logo">
                     <div class="logo">INCIQ<span class="logo-accent">.</span></div>
-                    <p>FDA-Based Skincare Safety Analyzer</p>
+                    <p>Know before you glow.r</p>
                 </div>
                 <div id="authForms">
                     <div id="loginForm">
